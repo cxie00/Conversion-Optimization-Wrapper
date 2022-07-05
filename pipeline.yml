@@ -1,0 +1,29 @@
+$schema: https://azuremlschemas.azureedge.net/latest/pipelineJob.schema.json
+type: pipeline
+
+display_name: convert_pipeline
+description: Pipeline with 1 component.
+
+compute: azureml:gpu-cluster
+inputs: 
+  target_backend: "torch"
+outputs:
+  final_pipeline_output:
+    mode: rw_mount
+
+jobs:
+  component_a:
+    type: command
+    component: file:./convert_component.yml
+    inputs:
+      conversion_component_input: 
+        type: uri_folder
+        path: ./mlruns/0/c59e68a72e5745659fa156a6c1836428/artifacts/skl/
+      conversion_target_input: ${{parent.inputs.target_backend}}
+
+    outputs:
+      component_a_output: 
+        type: uri_folder
+        mode: rw_mount
+
+

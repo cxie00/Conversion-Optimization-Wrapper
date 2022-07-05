@@ -1,4 +1,0 @@
-mlflow
-cloudpickle==2.1.0
-hummingbird-ml==0.4.4
-torch==1.11.0

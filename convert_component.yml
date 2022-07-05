@@ -1,0 +1,22 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
+type: command
+
+name: conversion_component
+display_name: Conversion Component
+version: 1
+
+inputs:
+  conversion_component_input:
+    type: uri_folder
+  conversion_target_input:
+    type: string
+outputs:
+  conversion_component_output:
+    type: uri_folder
+
+code: ./convert_component_src
+
+environment: azureml:hummingbird_env@latest
+
+command: >-
+  python conversion.py --conversion_component_input ${{inputs.conversion_component_input}} --conversion_target_input ${{inputs.conversion_target_input}} --conversion_component_output ${{outputs.conversion_component_output}}
