@@ -13,6 +13,10 @@ flavors:
     loader_module: mlflow.onnx
     python_version: 3.8.13
 mlflow_version: 1.26.1
-model_uuid: 4d95b428c1c24cf6a497923cd213844a
-run_id: 0f38990a49ce46c5a08d6dc0ecc32810
-utc_time_created: '2022-06-30 21:13:47.596517'
+model_uuid: def4d2a9b02e420cb6d6405cf23a281d
+run_id: 6d3f602ee4b54f5cbcfd24c63c76a0df
+saved_input_example_info:
+  artifact_path: input_example.json
+  format: tf-serving
+  type: ndarray
+utc_time_created: '2022-07-05 20:32:52.850386'
