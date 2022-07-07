@@ -1,18 +1,0 @@
-pytorch1.11.0:Å
-(
-input_0onnx::ReduceSum_1Abs_0"Abs
-V
-onnx::ReduceSum_1onnx::Div_2ReduceSum_1"	ReduceSum*
-axes@†*
-keepdims†
-,
-input_0
-onnx::Div_2variableDiv_2"Divtorch-jit-exportZ
-input_0
-
-sym
-»b
-variable
-
-sym
-»B

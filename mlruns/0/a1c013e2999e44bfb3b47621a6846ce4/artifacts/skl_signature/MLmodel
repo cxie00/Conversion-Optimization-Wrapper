@@ -1,0 +1,19 @@
+artifact_path: skl_signature
+flavors:
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.1.1
+mlflow_version: 1.26.1
+model_uuid: 1e6ab6f0b66d4c55a345f9434367da50
+run_id: a1c013e2999e44bfb3b47621a6846ce4
+saved_input_example_info:
+  artifact_path: input_example.json
+  format: tf-serving
+  type: ndarray
+signature:
+  inputs: '[{"type": "tensor", "tensor-spec": {"dtype": "float64", "shape": [-1, 200]}}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "float64", "shape": [-1,
+    200]}}]'
+utc_time_created: '2022-07-07 16:50:29.164335'

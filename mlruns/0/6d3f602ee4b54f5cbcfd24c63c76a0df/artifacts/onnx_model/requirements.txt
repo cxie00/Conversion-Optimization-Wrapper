@@ -1,3 +1,0 @@
-mlflow
-onnx==1.11.0
-onnxruntime==1.9.0

@@ -10,7 +10,6 @@ import torch
 import yaml 
 from yaml.loader import SafeLoader
 
-
 def read_load_model(model_folder):
     """
     Returns the instance of the input MLflow model by reading its flavors.
@@ -56,31 +55,25 @@ def convert(premodel, target, input_data= 0):
         mlflow.onnx.log_model(model.model, 'onnx_model', input_example=input_data)
     elif (target == "torch" or target == "pytorch"):
         model = hb_convert(premodel, 'torch')
-        model.to('cuda')
+        # model.to('cuda')
         mlflow.pytorch.log_model(model.model, 'torch_model')
 
     return model
 
 
-# input must be a link to the folder of the logged model for this to work
-parser = argparse.ArgumentParser()
-parser.add_argument("--conversion_component_input", type=str)
-parser.add_argument("--conversion_target_input", type=str)
-parser.add_argument("--conversion_component_output", type=str)
+"""
+Example:
+Make sure you pip install hummingbird-ml, torch, onnx, onnxruntime==1.9.0, and protobug==3.20 and whatever else import error you get.
+Then in terminal, run: python conversion_example.py
+"""
 
-args = parser.parse_args()
+# load the mlflow input model. this is a skl RandomForestClassifier model
+premodel = read_load_model("conversionAPI\mlruns\\0\c59e68a72e5745659fa156a6c1836428\\artifacts\skl")
 
-print("conversion_component_input path: %s" % args.conversion_component_input)
-print("conversion_target_input: %s" % args.conversion_target_input)
-print("conversion_component_output path: %s" % args.conversion_component_output)
+# load the test inputs for this dataset with  mlflow
+ml_model = mlflow.models.Model.load("conversionAPI\mlruns\\0\c59e68a72e5745659fa156a6c1836428\\artifacts\skl")
+input_example =  ml_model.load_input_example("conversionAPI\mlruns\\0\c59e68a72e5745659fa156a6c1836428\\artifacts\skl")
 
-premodel = read_load_model(args.conversion_component_input)
 
-if (args.conversion_target_input == "onnx"):
-    # load the test inputs for this dataset with  mlflow
-    ml_model = mlflow.models.Model.load(path=args.conversion_component_input)
-    input_example =  ml_model.load_input_example(path=args.conversion_component_input)
-
-    model = convert(premodel, args.conversion_target_input, input_example)
-else: 
-    model = convert(premodel, args.conversion_target_input)
+# convert the mlflow input model
+model = convert(premodel, "torch", input_example)
