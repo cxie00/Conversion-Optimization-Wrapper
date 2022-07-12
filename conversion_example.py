@@ -49,11 +49,9 @@ def convert_model(premodel, target, input_data= 0):
     """
     assert premodel is not None
     assert (target == 'onnx' or target == 'torch')
-    print("line 52")
     if (target == "onnx"):
         model = hb_convert(premodel, 'onnx', test_input=input_data)
         mlflow.onnx.log_model(model.model, 'onnx_model', input_example=input_data)
-        print("line 56")
     elif (target == "torch" or target == "pytorch"):
         model = hb_convert(premodel, 'torch')
         # model.to('cuda')
@@ -89,6 +87,6 @@ skl_model.fit(X, y)
 pred = skl_model.predict(X)
 sig = mlflow.models.infer_signature(X, pred)
 mlflow.sklearn.log_model(skl_model, 'pre_skl_model', input_example=X, signature=sig)
-print("line 92")
-model = convert_model(skl_model, "onnx", X)
-print("line 94")
+
+model = convert_model(skl_model, "torch", X)
+
