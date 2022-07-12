@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/t-xiechloe/code/conversionAPI/mlruns/0/2f13a08c11b5420c887b95fc1f96de4e/artifacts
+end_time: 1657664086220
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+name: ''
+run_id: 2f13a08c11b5420c887b95fc1f96de4e
+run_uuid: 2f13a08c11b5420c887b95fc1f96de4e
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1657664078699
+status: 3
+tags: []
+user_id: t-xiechloe

@@ -13,10 +13,9 @@ from yaml.loader import SafeLoader
 
 def read_load_model(model_folder):
     """
-    Returns the instance of the input MLflow model by reading its flavors.
-    
+    returns the instance of the input MLflow model by reading its flavors.
     params:
-        model_folder: string path to the MLmodel file of the MLflow model. Must be like "path\to\run\artifacts\flavor\MLmodel" 
+        model_folder: string path to the MLmodel file of the MLflow model. Must be like "path\to\run\artifacts\model_folder" 
     """
     mlmodel_file = model_folder + "/MLmodel"
 
@@ -34,7 +33,7 @@ def read_load_model(model_folder):
         print("No skl, pytorch, or onnx model found.")
         return
 
-def convert(premodel, target, input_data= 0):
+def convert(premodel, target, input_data=0):
     """
     Converts an MLflow model to a target framework and returns an MLflow model in the target framework.
     
@@ -53,14 +52,17 @@ def convert(premodel, target, input_data= 0):
    
     if (target == "onnx"):
         model = hb_convert(premodel, 'onnx', test_input=input_data)
-        mlflow.onnx.log_model(model.model, 'onnx_model', input_example=input_data)
+        pred = model.predict(input_data)
+        sig = mlflow.models.infer_signature(input_data, pred)
+        mlflow.onnx.log_model(model.model, 'onnx_model', input_example=input_data, signature=sig)
     elif (target == "torch" or target == "pytorch"):
         model = hb_convert(premodel, 'torch')
-        model.to('cuda')
-        mlflow.pytorch.log_model(model.model, 'torch_model')
+        # model.to('cuda')
+        pred = model.predict(input_data)
+        sig = mlflow.models.infer_signature(input_data, pred)
+        mlflow.pytorch.log_model(model.model, 'torch_model', input_example=input_data, signature=sig)
 
     return model
-
 
 # input must be a link to the folder of the logged model for this to work
 parser = argparse.ArgumentParser()

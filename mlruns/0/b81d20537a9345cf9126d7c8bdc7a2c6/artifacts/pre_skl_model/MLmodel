@@ -11,8 +11,8 @@ flavors:
     serialization_format: cloudpickle
     sklearn_version: 1.1.1
 mlflow_version: 1.26.1
-model_uuid: 9c6abf2677c7482693b55c454f91fba2
-run_id: 929129c7b14940ffa2884a0504f682b6
+model_uuid: 1328affb1d46475bb10818f54f8b1e03
+run_id: b81d20537a9345cf9126d7c8bdc7a2c6
 saved_input_example_info:
   artifact_path: input_example.json
   format: tf-serving
@@ -20,4 +20,4 @@ saved_input_example_info:
 signature:
   inputs: '[{"type": "tensor", "tensor-spec": {"dtype": "float64", "shape": [-1, 30]}}]'
   outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "int32", "shape": [-1]}}]'
-utc_time_created: '2022-07-12 20:56:57.183871'
+utc_time_created: '2022-07-12 22:15:17.904567'
