@@ -15,7 +15,7 @@ def read_load_model(model_folder):
     """
     returns the instance of the input MLflow model by reading its flavors.
     params:
-        model_folder: string path to the MLmodel file of the MLflow model. Must be like "path\to\run\artifacts\model_folder" 
+        model_folder: string path to the MLmodel file of the MLflow model. Must be like "path\to\run\artifacts\flavor\MLmodel" 
     """
     mlmodel_file = model_folder + "/MLmodel"
 
@@ -57,12 +57,13 @@ def convert(premodel, target, input_data=0):
         mlflow.onnx.log_model(model.model, 'onnx_model', input_example=input_data, signature=sig)
     elif (target == "torch" or target == "pytorch"):
         model = hb_convert(premodel, 'torch')
-        # model.to('cuda')
+        model.to('cuda')
         pred = model.predict(input_data)
         sig = mlflow.models.infer_signature(input_data, pred)
         mlflow.pytorch.log_model(model.model, 'torch_model', input_example=input_data, signature=sig)
 
     return model
+
 
 # input must be a link to the folder of the logged model for this to work
 parser = argparse.ArgumentParser()
@@ -78,11 +79,10 @@ print("conversion_component_output path: %s" % args.conversion_component_output)
 
 premodel = read_load_model(args.conversion_component_input)
 
-if (args.conversion_target_input == "onnx"):
-    # load the test inputs for this dataset with  mlflow
-    ml_model = mlflow.models.Model.load(path=args.conversion_component_input)
-    input_example =  ml_model.load_input_example(path=args.conversion_component_input)
+ml_model = mlflow.models.Model.load(path=args.conversion_component_input)
+input_example =  ml_model.load_input_example(path=args.conversion_component_input)
 
-    model = convert(premodel, args.conversion_target_input, input_example)
-else: 
-    model = convert(premodel, args.conversion_target_input)
+model = convert(premodel, args.conversion_target_input, input_example)
+
+
+

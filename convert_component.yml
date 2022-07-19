@@ -7,16 +7,16 @@ version: 1
 
 inputs:
   conversion_component_input:
-    type: uri_folder
+    type: mlflow_model
   conversion_target_input:
     type: string
 outputs:
   conversion_component_output:
-    type: uri_folder
+    type: mlflow_model
 
 code: ./convert_component_src
 
 environment: azureml:hummingbird_env@latest
 
 command: >-
-  python conversion.py --conversion_component_input ${{inputs.conversion_component_input}} --conversion_target_input ${{inputs.conversion_target_input}} --conversion_component_output ${{outputs.conversion_component_output}}
+  python conversion.py --conversion_component_input ${{inputs.conversion_component_input}} --conversion_target_input ${{inputs.conversion_target_input}} --conversion_component_output ${{outputs.conversion_component_output}} 

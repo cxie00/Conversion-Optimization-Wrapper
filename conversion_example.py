@@ -4,6 +4,7 @@ from datetime import datetime
 
 from hummingbird.ml import convert as hb_convert
 import mlflow
+import onnx
 import numpy as np
 import torch
 
@@ -73,12 +74,25 @@ Then in terminal, run: python conversion_example.py
 
 
 # convert the mlflow input model
-X, y = load_breast_cancer(return_X_y=True)
-skl_model = RandomForestClassifier(n_estimators=500, max_depth=7)
-skl_model.fit(X, y)
-pred = skl_model.predict(X)
-sig = mlflow.models.infer_signature(X, pred)
-mlflow.sklearn.log_model(skl_model, 'pre_skl_model', input_example=X, signature=sig)
+# X, y = load_breast_cancer(return_X_y=True)
+# skl_model = RandomForestClassifier(n_estimators=500, max_depth=7)
+# skl_model.fit(X, y)
+# pred = skl_model.predict(X)
+# sig = mlflow.models.infer_signature(X, pred)
+# mlflow.sklearn.log_model(skl_model, 'pre_skl_model', input_example=X, signature=sig)
 
-model = convert_model(skl_model, "torch", X)
+# model = convert_model(skl_model, "torch", X)
+model = mlflow.sklearn.load_model("mlruns\\0\\b81d20537a9345cf9126d7c8bdc7a2c6\\artifacts\pre_skl_model")
+ml_model = mlflow.models.Model.load("mlruns\\0\\b81d20537a9345cf9126d7c8bdc7a2c6\\artifacts\pre_skl_model")
+input_example =  ml_model.load_input_example("mlruns\\0\\b81d20537a9345cf9126d7c8bdc7a2c6\\artifacts\pre_skl_model")
+print(type(model))
+pred = model.predict(input_example)
+
+
+model = mlflow.onnx.load_model("mlruns\\0\\b81d20537a9345cf9126d7c8bdc7a2c6\\artifacts\onnx_model")
+ml_model = mlflow.models.Model.load("mlruns\\0\\b81d20537a9345cf9126d7c8bdc7a2c6\\artifacts\onnx_model")
+input_example =  ml_model.load_input_example("mlruns\\0\\b81d20537a9345cf9126d7c8bdc7a2c6\\artifacts\onnx_model")
+print(type(input_example))
+# print(type(model))
+pred = model.predict(input_example)
 

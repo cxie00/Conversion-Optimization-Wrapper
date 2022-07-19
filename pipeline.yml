@@ -6,9 +6,10 @@ description: Pipeline with 1 component.
 
 compute: azureml:gpu-cluster
 inputs: 
-  target_backend: "torch"
+  target_backend: "onnx"
 outputs:
   final_pipeline_output:
+    type: mlflow_model
     mode: rw_mount
 
 jobs:
@@ -18,7 +19,7 @@ jobs:
     inputs:
       conversion_component_input: 
         type: uri_folder
-        path: ./mlruns/0/c59e68a72e5745659fa156a6c1836428/artifacts/skl/
+        path: ./mlruns/0/708024f552894a169962da22ee639ad9/artifacts/skl_model # randomForestClassifier trained on breast cancer
       conversion_target_input: ${{parent.inputs.target_backend}}
 
     outputs:
