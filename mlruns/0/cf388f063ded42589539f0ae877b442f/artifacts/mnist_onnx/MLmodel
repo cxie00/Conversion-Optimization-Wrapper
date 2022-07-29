@@ -1,0 +1,27 @@
+artifact_path: mnist_onnx
+flavors:
+  onnx:
+    code: null
+    data: model.onnx
+    onnx_version: 1.11.0
+    providers:
+    - CUDAExecutionProvider
+    - CPUExecutionProvider
+  python_function:
+    data: model.onnx
+    env: conda.yaml
+    loader_module: mlflow.onnx
+    python_version: 3.8.13
+mlflow_version: 1.26.1
+model_uuid: 793651d38ce64a03bdbef3d5efeda994
+run_id: cf388f063ded42589539f0ae877b442f
+saved_input_example_info:
+  artifact_path: input_example.json
+  format: tf-serving
+  type: ndarray
+signature:
+  inputs: '[{"type": "tensor", "tensor-spec": {"dtype": "float32", "shape": [-1, 1,
+    1, 28, 28]}}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "float32", "shape": [-1,
+    1, 1, 28, 28]}}]'
+utc_time_created: '2022-07-27 16:59:46.950126'

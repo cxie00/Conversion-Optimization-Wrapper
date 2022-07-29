@@ -26,5 +26,16 @@ jobs:
       component_a_output: 
         type: uri_folder
         mode: rw_mount
-
+  component_b:
+    type: command
+    component: file:./optimize_component.yml
+    inputs:
+      optimization_component_model: 
+        type: uri_folder
+        path: ./mlruns/0/cf388f063ded42589539f0ae877b442f/artifacts/mnist_onnx # ONNX model trained on MNIST dataset
+      optimization_shape_input: ${{parent.inputs.shape}} 
+    outputs:
+      component_b_output:
+        type: uri_folder   
+        mode: rw_mount 
 

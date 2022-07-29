@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/t-xiechloe/code/mnist-12/mlruns/0/cf388f063ded42589539f0ae877b442f/artifacts
+end_time: 1658941190167
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+name: ''
+run_id: cf388f063ded42589539f0ae877b442f
+run_uuid: cf388f063ded42589539f0ae877b442f
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1658941186874
+status: 3
+tags: []
+user_id: t-xiechloe
