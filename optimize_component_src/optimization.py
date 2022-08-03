@@ -1,15 +1,18 @@
 import numpy as np
 import onnx
-import os
 import glob
 
 import tvm
 from tvm import te
 import tvm.relay as relay
-from tvm.contrib.download import download_testdata
+
 import mlflow
 from onnx import numpy_helper
 import onnxruntime
+
+import argparse
+import yaml 
+from yaml.loader import SafeLoader
 
 def read_load_model(model_folder):
     """
@@ -60,7 +63,7 @@ def optimize(model_folder, shape):
     model, flavor = read_load_model(model_folder)
     if (flavor == 'onnx'):
         # Get input name to ONNX model
-        session = onnxruntime.InferenceSession(model_folder + "model.onnx")
+        session = onnxruntime.InferenceSession(model_folder + "/model.onnx")
         session.get_modelmeta()
         input_name = session.get_inputs()[0].name
         
@@ -82,13 +85,14 @@ def optimize(model_folder, shape):
 parser = argparse.ArgumentParser()
 parser.add_argument("--optimization_component_model", type=str)
 parser.add_argument("--optimization_shape_input", type=str)
+parser.add_argument("--optimization_component_output", type=str)
 
 args = parser.parse_args()
-shape = tuple([int(i) for i in args.optimization_shape_input.split(",")])
-
 print("optimization_component_model path: %s" % args.optimization_component_model)
-print("optimization_shape_input: %s" % shape)
-print("optimization_output: %s" % args.optimization_output)
+print("optimization_shape_input: %s" % args.optimization_shape_input)
+print("optimization_component_output: %s" % args.optimization_component_output)
 
+shape = tuple([int(i) for i in args.optimization_shape_input.split(",")])
+print(shape)
 # Optimize the model
 tvm_model = optimize(args.optimization_component_model, shape)

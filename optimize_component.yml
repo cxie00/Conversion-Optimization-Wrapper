@@ -17,7 +17,7 @@ outputs:
 
 code: ./optimize_component_src
 
-environment: azureml:hummingbird_env@latest
+environment: azureml:tvm_env@latest
 
 command: >-
-  python optimization.py -- optimization_component_model ${{inputs.optimization_component_model}} --optimization_shape_input ${{inputs.optimization_shape_input}} --optimization_component_output ${{outputs.optimization_component_output}} 
+  python optimization.py --optimization_component_model ${{inputs.optimization_component_model}} --optimization_shape_input ${{inputs.optimization_shape_input}} --optimization_component_output ${{outputs.optimization_component_output}} 
