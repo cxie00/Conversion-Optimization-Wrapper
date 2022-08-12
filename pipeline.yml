@@ -2,13 +2,14 @@ $schema: https://azuremlschemas.azureedge.net/latest/pipelineJob.schema.json
 type: pipeline
 
 display_name: convert_optimize_pipeline
-description: Pipeline with 2 component.
+description: Pipeline with 2 components.
 
 compute: azureml:gpu-cluster
 inputs: 
   target_backend: "onnx"
-  threshold: "2"
+  threshold: 2
   metrics: "precision,accuracy"
+  runs: 1000
   shape: "1,1,28,28"
 outputs:
   fin_pipeline_output:
@@ -22,12 +23,13 @@ jobs:
     inputs:
       conversion_component_input: 
         type: mlflow_model
-        path: ./mlruns/0/9cf7e313030e4c76a4ec98bd3d7cafb9/artifacts/pre_skl_model # randomForestClassifier trained on breast cancer dataset
+        path: azureml:skl_model_cx@latest # ./mlruns/0/9cf7e313030e4c76a4ec98bd3d7cafb9/artifacts/pre_skl_model # randomForestClassifier trained on breast cancer dataset
       conversion_target_input: ${{parent.inputs.target_backend}}
       conversion_threshold_input: ${{parent.inputs.threshold}}
       conversion_metrics_input: ${{parent.inputs.metrics}}
+      conversion_runs_input: ${{parent.inputs.runs}}
     outputs:
-      component_a_output: 
+      conversion_component_output: 
         type: mlflow_model
         mode: rw_mount
   component_b:
